@@ -47,24 +47,30 @@ def str_mix(a, b):
 # Provided simple test() function used in main() to print
 # what each function returns vs. what it's supposed to return.
 def test(res, expt):
+    print("Test result: " + str(expt == res))
+    print("Actual: " + res + "; Expected: " + expt)
     return res == expt
 
 
 def main():
-    print(test(num_of_items(11), "Number of: many"))
-    print(test(num_of_items(4), "Number of: 4"))
-    print(test(num_of_items(10), "Number of: many"))
-    print(test(num_of_items(9), "Number of: 9"))
-    print(test(start_end_symbols('welcome'), 'weme'))
-    print(test(start_end_symbols('cat'), 'caat'))
-    print(test(start_end_symbols('thunder'), 'ther'))
-    print(test(replace_char('bibble'), 'bi**le'))
-    print(test(replace_char('aaaaa'), '*****'))
-    print(test(replace_char('rrekdrneerr'), 'r*ekd*nee**'))
-    print(test(str_mix('max', 'pid'), 'pix mad'))
-    print(test(str_mix('dog', 'dinner'), 'dig donner'))
-    print(test(str_mix('cat', 'kitten'), 'dig donner'))
-    print(test(str_mix('mouse', 'sun'), 'dig donner'))
+    print("Test 'num_of_items:'")
+    test(num_of_items(11), "Number of: many")
+    test(num_of_items(4), "Number of: 4")
+    test(num_of_items(10), "Number of: many")
+    test(num_of_items(9), "Number of: 9")
+    print("Test 'start_end_symbols:'")
+    test(start_end_symbols('welcome'), 'weme')
+    test(start_end_symbols('cat'), 'caat')
+    test(start_end_symbols('thunder'), 'ther')
+    print("Test 'replace_char:'")
+    test(replace_char('bibble'), 'bi**le')
+    test(replace_char('aaaaa'), '*****')
+    test(replace_char('rrekdrneerr'), 'r*ekd*nee**')
+    print("Test 'str_mix:'")
+    test(str_mix('max', 'pid'), 'pix mad')
+    test(str_mix('dog', 'dinner'), 'dig donner')
+    test(str_mix('cat', 'kitten'), 'dig donner')
+    test(str_mix('mouse', 'sun'), 'dig donner')
 
 
 if __name__ == '__main__':

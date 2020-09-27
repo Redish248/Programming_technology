@@ -38,17 +38,25 @@ def cort(numbers):
 
 
 def test(res, expt):
+    print("Test result: " + str(expt == res))
+    print("Actual: " + str(res) + "; Expected: " + str(expt))
     return res == expt
 
 
 def main():
-    print(test(me(['a', 'bbb', 'ads', 'ssss', 'aveg']), 2))
-    print(test(me(['a', 'bwb', 'dddddwd', 'ssss', 'aveg']), 3))
-    print(test(me(['arr', '5532', '11', 'ssss42a', 'avega']), 1))
-    print(test(fx(['tix', 'xyz', 'apple', 'xacadu', 'aabbbccc']), ['xacadu', 'xyz', 'aabbbccc', 'apple', 'tix']))
-    print(test(fx(['bba', 'aaa', 'xsa', 'bab', 'xas']), ['xas', 'xsa', 'aaa', 'bab', 'bba']))
-    print(test(cort([(1, 7), (1, 3), (3, 4, 5), (2, 2)]), [(2, 2), (1, 3), (3, 4, 5), (1, 7)]))
-    print(test(cort([(10, 7, 8), (1, 3), (3, 5), (2, 2)]), [(2, 2), (1, 3), (3, 5), (10, 7, 8)]))
+    print("Test 'me:'")
+    test(me(['a', 'bbb', 'ads', 'ssss', 'aveg']), 2)
+    test(me(['a', 'bwb', 'dddddwd', 'ssss', 'aveg']), 3)
+    test(me(['arr', '5532', '11', 'ssss42a', 'avega']), 0)
+    test(me(['arr', '5532', '11', 'ssss42a', 'avega']), 1)
+    print("Test 'fx:'")
+    test(fx(['tix', 'xyz', 'apple', 'xacadu', 'aabbbccc']), ['xacadu', 'xyz', 'aabbbccc', 'apple', 'tix'])
+    test(fx(['bba', 'aaa', 'xsa', 'bab', 'xas']), ['xas', 'xsa', 'aaa', 'bab', 'bba'])
+    test(fx(['bba', 'aaa', 'xsa', 'bab', 'xas']), ['xas', 'xsa', 'bba', 'bab', 'aaa'])
+    print("Test 'cort:'")
+    test(cort([(1, 7), (1, 3), (3, 4, 5), (2, 2)]), [(2, 2), (1, 3), (3, 4, 5), (1, 7)])
+    test(cort([(1, 7), (1, 3), (3, 4, 5), (2, 2)]), [(2, 2), (1, 7), (3, 4, 5), (1, 3)])
+    test(cort([(10, 7, 8), (1, 3), (3, 5), (2, 2)]), [(2, 2), (1, 3), (3, 5), (10, 7, 8)])
 
 
 if __name__ == '__main__':
