@@ -1,9 +1,9 @@
-# 1.
-# Вх: строка. Если длина > 3, добавить в конец "ing",
-# если в конце нет уже "ing", иначе добавить "ly".
 import re
 
 
+# 1.
+# Вх: строка. Если длина > 3, добавить в конец "ing",
+# если в конце нет уже "ing", иначе добавить "ly".
 def add_tail(s):
     if len(s) > 3:
         if s.endswith('ing'):
@@ -17,18 +17,18 @@ def add_tail(s):
 # Вх: строка. Заменить подстроку от 'not' до 'bad'. ('bad' после 'not')
 # на 'good'.
 # Пример: So 'This music is not so bad!' -> This music is good!
+# def not_bad_old(s):
+#    try:
+#        if s.index('bad') > s.index('not'):
+#            return s[0:s.index('not')] + 'good' + s[s.index('bad') + 3:len(s)]
+#        else:
+#            return s
+#    except ValueError:
+#        return s
+
+
 def not_bad(s):
-    try:
-        if s.index('bad') > s.index('not'):
-            return s[0:s.index('not')] + 'good' + s[s.index('bad') + 3:len(s)]
-        else:
-            return s
-    except ValueError:
-        return s
-
-
-def not_bad2(s):
-    return re.sub('not[\w\s     ]*bad', 'good', s)
+    return re.sub('not[\w\s]*bad', 'good', s)
 
 
 def test(res, expt):
@@ -43,13 +43,9 @@ def main():
     test(add_tail('block'), 'blocking')
     test(add_tail('blocking'), 'blockingly')
     print("Test 'not_bad:'")
-    test(not_bad2('This music is not so bad!'), 'This music is good!')
-    test(not_bad2('This music is cool!'), 'This music is cool!')
-    # FIXME:
-    test(not_bad2('bad aaaaaaaa not aaaa not aaa bad'), 'bad aaaaaaaa not aaaa good')
-    # FIXME:
-    test(not_bad2('not aaa bad not aaa bad not aaa bad not aaa bad'), 'good good good good')
-
+    test(not_bad('This music is not so bad!'), 'This music is good!')
+    test(not_bad('This music is cool!'), 'This music is cool!')
+    test(not_bad('bad aaaaaaaa not aaaa not aaa bad'), 'bad aaaaaaaa good')
 
 
 if __name__ == '__main__':

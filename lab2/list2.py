@@ -7,7 +7,7 @@ def rm_adj(nums):
 
 
 # 2. Вх: Два списка упорядоченных по возрастанию, Возвр: новый отсортированный объединенный список
-def sort_all(list1, list2) -> list:
+def sort_all(list1, list2):
     return sorted(list1 + list2)
 
 
