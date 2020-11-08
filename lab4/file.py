@@ -32,6 +32,7 @@ import sys
 
 generated_words = {}
 
+
 def mem_dict(filename):
     try:
         with open(filename, 'r') as file:
@@ -39,11 +40,11 @@ def mem_dict(filename):
             i = 0
             current_word = all_words[0]
             while i < len(all_words):
-                if all_words[i] is not None and i != len(all_words)-1:
+                if all_words[i] is not None and i != len(all_words) - 1:
                     if generated_words.get(all_words[i].lower()) is None:
-                        generated_words[all_words[i].lower()] = [all_words[i+1].lower()]
+                        generated_words[all_words[i].lower()] = [all_words[i + 1].lower()]
                     else:
-                        generated_words[all_words[i].lower()].append(all_words[i+1].lower())
+                        generated_words[all_words[i].lower()].append(all_words[i + 1].lower())
                 i = i + 1
 
         new_file = open("new_dict.txt", "w")
@@ -51,7 +52,6 @@ def mem_dict(filename):
         while current_word.lower() != 'coach':
             current_word = random.choice(generated_words.get(current_word.lower()))
             new_file.write(current_word.lower() + ' ')
-        file.close()
         new_file.close()
     except IOError:
         print("Error during opening or reading file.")
