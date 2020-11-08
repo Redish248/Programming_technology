@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import * as axios from "axios";
-import {InputGroup} from "react-bootstrap";
+import Button from 'react-bootstrap/Button'
 
 class MainPage extends Component {
 
@@ -29,26 +29,54 @@ class MainPage extends Component {
         });
     };
 
+    onValueChange = (event) => {
+        this.setState({
+            level: event.target.value
+        });
+    }
+
     render() {
         return (
             <div>
-                <h2>Выберите уровень:</h2>
-                <InputGroup className="mb-3">
-                    <InputGroup>
-                        <InputGroup.Prepend>
-                            <InputGroup.Radio  />
-                            1 - Лёгкий
-                        </InputGroup.Prepend>
-                        <InputGroup.Prepend>
-                            <InputGroup.Radio />
-                            2 - Средний
-                        </InputGroup.Prepend>
-                        <InputGroup.Prepend>
-                            <InputGroup.Radio />
-                            3 - Сложный
-                        </InputGroup.Prepend>
-                    </InputGroup>
-                </InputGroup>
+                <h1>Игра "Угадай по фото!"</h1>
+                <form onSubmit={this.setUpLevel}>
+                    <div className="radio">
+                        <label>
+                            <input
+                                type="radio"
+                                value="1"
+                                checked={this.state.level === "1"}
+                                onChange={this.onValueChange}
+                            />
+                            1 уровень - лёгкий
+                        </label>
+                    </div>
+                    <div className="radio">
+                        <label>
+                            <input
+                                type="radio"
+                                value="2"
+                                checked={this.state.level === "2"}
+                                onChange={this.onValueChange}
+                            />
+                            2 уровень - Средний
+                        </label>
+                    </div>
+                    <div className="radio">
+                        <label>
+                            <input
+                                type="radio"
+                                value="3"
+                                checked={this.state.level === "3"}
+                                onChange={this.onValueChange}
+                            />
+                            3 уровень - Сложный
+                        </label>
+                    </div>
+                    <Button variant="secondary" size="lg" active type="submit">
+                        Выбрать
+                    </Button>
+                </form>
             </div>
         );
     }
