@@ -15,11 +15,11 @@ class MyHandler(BaseHTTPRequestHandler):
     def _set_headers(self):
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
-        self.send_header('Access-Control-Allow-Origin', "http://localhost:3000")
+        self.send_header("Access-Control-Allow-Origin", "http://localhost:3000")
+        self.send_header("Access-Control-Allow-Credentials", "true")
         self.end_headers()
 
     def do_GET(self):
-        self.send_response(200)
         if self.path == '/game/next_question':
             self._set_headers()
             message = next_iteration()
@@ -33,12 +33,13 @@ class MyHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         if self.path == '/game/send_level':
+            self._set_headers()
             content_len = int(self.headers.get('Content-Length'))
             post_body = self.rfile.read(content_len)
             global level
             level = int(str(post_body)[str(post_body).index("level") + 14])
             execute_game()
-            self.send_response(200)
+            self.wfile.write(bytes('OK', 'utf-8'))
         return
 
 
