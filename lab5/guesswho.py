@@ -15,6 +15,7 @@ class MyHandler(BaseHTTPRequestHandler):
     def _set_headers(self):
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
+        self.send_header('Access-Control-Allow-Origin', "http://localhost:3000")
         self.end_headers()
 
     def do_GET(self):
@@ -37,6 +38,7 @@ class MyHandler(BaseHTTPRequestHandler):
             global level
             level = int(str(post_body)[str(post_body).index("level") + 14])
             execute_game()
+            self.send_response(200)
         return
 
 

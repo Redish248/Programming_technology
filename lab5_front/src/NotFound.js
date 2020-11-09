@@ -1,6 +1,6 @@
-
+import './index.css';
 import React, { Component} from 'react';
-import {Button} from "primereact/components/button/Button";
+import Button from "react-bootstrap/Button";
 
 class NotFound extends Component{
 
@@ -20,8 +20,11 @@ class NotFound extends Component{
                 <p>
                     <a href="https://giphy.com/gifs/pusheen-XgDozI2ewprHO"/>
                 </p>
-                <Button label="На главную" onClick={this.handlePrevPage}/>
-
+                <div className="mb-2">
+                    <Button variant="secondary" size="lg" onClick={this.handlePrevPage}>
+                        На главную
+                    </Button>
+                </div>
             </div>
         );
     }

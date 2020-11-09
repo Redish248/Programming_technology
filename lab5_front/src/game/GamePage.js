@@ -21,13 +21,14 @@ class GamePage extends Component {
         }
     }
 
-    getImagesWithAnswers() {
+    componentDidMount() {
         let that = this;
         axios({
             method: 'get',
             url: 'http://localhost:8080/game/next_question',
             withCredentials: true
         }).then((res) => {
+            console.log(res)
                 this.setState({
                     image: res.data.image,
                     correct_answer: res.data.correct_answer,
@@ -36,6 +37,7 @@ class GamePage extends Component {
                 });
             }
         ).catch(function (error) {
+            console.log(error);
             if (error === undefined || error.response === undefined) {
                 that.props.history.push('/ss');
             }
@@ -75,7 +77,7 @@ class GamePage extends Component {
                             <Container>
                                 <Row>
                                     <Col xs={6} md={4}>
-                                        <Image src={this.state.image} alt="kekke" thumbnail />
+                                        <Image src={this.state.image} alt="Картинка не загрузилась" thumbnail />
                                     </Col>
                                 </Row>
                             </Container>
@@ -120,9 +122,11 @@ class GamePage extends Component {
                                 </Button>
                             </div>
                             <div className="Error">{this.state.result}</div>
-                            <Button variant="secondary" size="lg" onClick={this.goNext}>
-                                Дальше
-                            </Button>
+                            <div className="mb-2">
+                                <Button variant="secondary" size="lg" onClick={this.goNext}>
+                                    Дальше
+                                </Button>
+                            </div>
                         </td>
                     </tr>
                 </table>
