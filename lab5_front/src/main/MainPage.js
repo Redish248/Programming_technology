@@ -48,7 +48,7 @@ class MainPage extends Component {
                                 checked={this.state.level === "1"}
                                 onChange={this.onValueChange}
                             />
-                            1 уровень - лёгкий
+                            1 уровень - Лёгкий
                         </label>
                     </div>
                     <div className="radio">

@@ -7,6 +7,6 @@ import NotFound from "./NotFound";
 export default () =>
     <Switch>
         <Route path="/game" exact component={GamePage} />
-        <Route path="/" exact component={MainPage} />
+        <Route exact path="/" component={MainPage} />
         <Route component={NotFound} />
     </Switch>;
