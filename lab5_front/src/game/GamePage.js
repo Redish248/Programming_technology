@@ -13,7 +13,7 @@ class GamePage extends Component {
         this.state = {
             level: 1,
             image: [],
-            correct_answer: 'a',
+            correct_name: 'a',
             varA: 'b',
             varB: 'c',
             selectedAnswer: '',
@@ -31,7 +31,7 @@ class GamePage extends Component {
             console.log(res)
                 this.setState({
                     image: res.data.image,
-                    correct_answer: res.data.correct_answer,
+                    correct_name: res.data.correct_name,
                     varA: res.data.varA,
                     varB: res.data.varB,
                 });
@@ -52,7 +52,7 @@ class GamePage extends Component {
     }
 
     checkAnswer = () => {
-        if (this.state.correct_answer === this.state.selectedAnswer) {
+        if (this.state.correct_name === this.state.selectedAnswer) {
             this.setState({
                 result: 'Правильно!'
             });
@@ -65,7 +65,7 @@ class GamePage extends Component {
     }
 
     goNext = () => {
-        this.props.history.push('/game');
+       // this.props.history.push('/game');
         window.location.reload()
     }
 
@@ -73,13 +73,13 @@ class GamePage extends Component {
         return (
             <div>
                 <h3>Выберите ответ:</h3>
-                <table>
+                <table >
                     <tr>
                         <td>
                             <Container>
                                 <Row>
-                                    <Col xs={6} md={4}>
-                                        <Image src={this.state.image} alt="Картинка не загрузилась" thumbnail />
+                                    <Col xs={300} md={200} >
+                                        <Image className="marginAll" src={this.state.image} alt="Картинка не загрузилась" thumbnail />
                                     </Col>
                                 </Row>
                             </Container>
@@ -112,20 +112,20 @@ class GamePage extends Component {
                                     <label>
                                         <input
                                             type="radio"
-                                            value={this.state.correct_answer}
-                                            checked={this.state.selectedAnswer === this.state.correct_answer}
+                                            value={this.state.correct_name}
+                                            checked={this.state.selectedAnswer === this.state.correct_name}
                                             onChange={this.onValueChange}
                                         />
-                                        {this.state.correct_answer}
+                                        {this.state.correct_name}
                                     </label>
                                 </div>
-                                <Button variant="secondary" size="lg" active onClick={this.checkAnswer} >
+                                <Button className="marginAll" variant="secondary" size="lg" active onClick={this.checkAnswer} >
                                     Ответить
                                 </Button>
                             </div>
-                            <div className="Error">{this.state.result}</div>
+                            <div className="marginAll" className="Error">{this.state.result}</div>
                             <div className="mb-2">
-                                <Button variant="secondary" size="lg" onClick={this.goNext}>
+                                <Button className="marginAll" variant="secondary" size="lg" onClick={this.goNext}>
                                     Дальше
                                 </Button>
                             </div>
