@@ -58,14 +58,15 @@ def execute_game():
 
 def next_iteration():
     correct_name = random.choice(people)
-    if people[people.index(correct_name) + 1] is not None:
-        varA = people[people.index(correct_name) + 1]
+    index = people.index(correct_name)
+    if index < len(people) - 1:
+        varA = people[index + 1]
     else:
-        varA = people[people.index(correct_name) - 2]
-    if people[people.index(correct_name) - 1] is not None:
-        varB = people[people.index(correct_name) - 1]
+        varA = people[index - 2]
+    if index != 0:
+        varB = people[index - 1]
     else:
-        varB = people[people.index(correct_name) + 2]
+        varB = people[index + 2]
     image = get_image(correct_name)
     return [image, varA, varB, correct_name]
 
