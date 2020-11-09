@@ -1,4 +1,3 @@
-import cgi
 import json
 import random
 import requests
@@ -28,7 +27,7 @@ class MyHandler(BaseHTTPRequestHandler):
                 'varA': message[1],
                 'varB': message[2],
                 'correct_name': message[3]
-            }).encode("UTF-8"))
+            }).encode())
         return
 
     def do_POST(self):
@@ -36,7 +35,7 @@ class MyHandler(BaseHTTPRequestHandler):
             content_len = int(self.headers.get('Content-Length'))
             post_body = self.rfile.read(content_len)
             global level
-            level = int(post_body[102:103])
+            level = int(str(post_body)[str(post_body).index("level") + 14])
             execute_game()
         return
 
