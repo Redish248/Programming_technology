@@ -21,10 +21,14 @@ class MainPage extends Component {
             url: 'http://localhost:8080/game/send_level',
             data: formData,
             withCredentials: true
+        }).then((res) => {
+            that.props.history.push('/game');
+            window.location.reload()
         }).catch(function (error) {
             console.log(error);
             if (error === undefined || error.response === undefined) {
                 that.props.history.push('/ss');
+                window.location.reload()
             }
         });
     };

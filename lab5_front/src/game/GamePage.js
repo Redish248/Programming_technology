@@ -40,6 +40,7 @@ class GamePage extends Component {
             console.log(error);
             if (error === undefined || error.response === undefined) {
                 that.props.history.push('/ss');
+                window.location.reload()
             }
         });
     }
@@ -65,6 +66,7 @@ class GamePage extends Component {
 
     goNext = () => {
         this.props.history.push('/game');
+        window.location.reload()
     }
 
     render() {

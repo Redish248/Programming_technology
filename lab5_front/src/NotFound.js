@@ -10,6 +10,7 @@ class NotFound extends Component{
 
     handlePrevPage = () => {
         this.props.history.push('/');
+        window.location.reload()
     };
     render() {
         return (
