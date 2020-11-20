@@ -28,7 +28,6 @@ class GamePage extends Component {
             url: 'http://localhost:8080/game/next_question',
             withCredentials: true
         }).then((res) => {
-            console.log(res)
                 this.setState({
                     image: res.data.image,
                     correct_name: res.data.correct_name,
@@ -45,7 +44,7 @@ class GamePage extends Component {
         });
     }
 
-    onValueChange = (event) => {
+    onValueChange = (event) => {    
         this.setState({
             selectedAnswer: event.target.value
         });
@@ -78,7 +77,7 @@ class GamePage extends Component {
                         <td>
                             <Container>
                                 <Row>
-                                    <Col xs={300} md={200} >
+                                    <Col xs={400} md={200} >
                                         <Image className="marginAll" src={this.state.image} alt="Картинка не загрузилась" thumbnail />
                                     </Col>
                                 </Row>

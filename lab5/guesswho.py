@@ -80,7 +80,7 @@ def choose_level():
 
 
 def get_image(name):
-    req_key = str(name).replace("\n", " ") + " лицо"
+    req_key = str(name).replace("\n", " ") + " face"
     google_page = requests.get(f'https://www.google.com/search?tbm=isch&q={req_key}')
     images = html.fromstring(google_page.content).xpath("//img/@src")
     del images[0]
