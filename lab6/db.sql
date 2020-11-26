@@ -12,3 +12,13 @@ CREATE TABLE news_python (
     description  varchar NOT NULL,
     published   date
 );
+
+
+create sequence news_python_id_seq;
+
+alter sequence news_python_id_seq owner to redish;
+
+
+create sequence sites_id_seq;
+
+alter sequence sites_id_seq owner to redish;
