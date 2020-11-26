@@ -1,0 +1,15 @@
+.header {
+  width: 100%;
+  height: 80px;
+  background: darkblue;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  width: 80px;
+}
+
+.button-home {
+  margin: 12px 0;
+}
