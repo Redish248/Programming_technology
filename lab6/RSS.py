@@ -94,11 +94,13 @@ def insert_new_news(parsed_news, site_id):
 def get_news(site_id, page):
     global connection, cursor
     cursor = connection.cursor()
+    cursor.execute('select name from sites where id = ' + site_id)
+    site_name = cursor.fetchall()[0][0]
     cursor.execute('select * from news_python where site = ' + site_id)
     results = cursor.fetchall()
     news = []
     for row in results:
-        entity = Entity.News(row[0], row[1], row[2], row[3], row[4], row[5])
+        entity = Entity.News(row[0], site_name, row[2], row[3], row[4], row[5])
         news.append(entity)
     isLastPage = (len(news) <= int(page)*10)
     return [news[int(2)*10 - 10:int(2)*10], isLastPage]
