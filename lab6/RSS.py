@@ -26,27 +26,25 @@ class MyHandler(BaseHTTPRequestHandler):
             message = get_sites()
             self.wfile.write(json.dumps(message, default = lambda x: x.__dict__).encode())
         if self.path.startswith('/feed/get_news'):
-            self._set_headers()
             self.send_response(200)
+            self._set_headers()
             site_id = self.path[self.path.index("id=") + 3:self.path.index("&")]
             page = self.path[self.path.index("page=") + 5:]
             message = get_news(site_id, page)
-            json_news = str(json.dumps(message[0], default=lambda x: x.__dict__).encode())
             self.wfile.write(json.dumps({
-                'news': json_news,
+                'news': message[0],
                 'isLastPage': message[1]
-            }).encode())
+            }, default = lambda x: x.__dict__).encode())
         if self.path.startswith('/feed/update_news'):
-            self._set_headers()
             self.send_response(200)
+            self._set_headers()
             site_id = self.path[self.path.index("id=") + 3:]
             update_news(site_id)
             message = get_news(site_id, 1)
-            json_news = str(json.dumps(message[0], default = lambda x: x.__dict__).encode())
             self.wfile.write(json.dumps({
-                'news': json_news,
+                'news': message[0],
                 'isLastPage': message[1]
-            }).encode())
+            }, default=lambda x: x.__dict__).encode())
         return
 
     def do_POST(self):
