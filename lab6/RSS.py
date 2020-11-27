@@ -25,16 +25,28 @@ class MyHandler(BaseHTTPRequestHandler):
             self._set_headers()
             message = get_sites()
             self.wfile.write(json.dumps(message, default = lambda x: x.__dict__).encode())
-      #  if self.path.startswith('/feed/get_news'):
-     #       self._set_headers()
-    #    self.send_response(200)
-     #       message = next_iteration()
-     #       self.wfile.write(json.dumps({
-     #           'image': message[0],
-     #           'varA': message[1],
-     #           'varB': message[2],
-      #          'correct_name': message[3]
-      #      }).encode())
+        if self.path.startswith('/feed/get_news'):
+            self._set_headers()
+            self.send_response(200)
+            site_id = self.path[self.path.index("id=") + 3:self.path.index("&")]
+            page = self.path[self.path.index("page=") + 5:]
+            message = get_news(site_id, page)
+            json_news = str(json.dumps(message[0], default=lambda x: x.__dict__).encode())
+            self.wfile.write(json.dumps({
+                'news': json_news,
+                'isLastPage': message[1]
+            }).encode())
+        if self.path.startswith('/feed/update_news'):
+            self._set_headers()
+            self.send_response(200)
+            site_id = self.path[self.path.index("id=") + 3:]
+            update_news(site_id)
+            message = get_news(site_id, 1)
+            json_news = str(json.dumps(message[0], default = lambda x: x.__dict__).encode())
+            self.wfile.write(json.dumps({
+                'news': json_news,
+                'isLastPage': message[1]
+            }).encode())
         return
 
     def do_POST(self):
@@ -56,41 +68,51 @@ class MyHandler(BaseHTTPRequestHandler):
         return
 
 
+def update_news(site_id):
+    global connection, cursor
+    cursor = connection.cursor()
+    cursor.execute('select url from sites where id = ' + site_id)
+    results = cursor.fetchall()
+    parsed_news = parse_news(results[0][0])
+    insert_new_news(parsed_news, site_id)
+
+
+def insert_new_news(parsed_news, site_id):
+    global connection, cursor
+    cursor = connection.cursor()
+    for news in parsed_news:
+        cursor.execute('select * from news_python where id = \'' + site_id + '\' and link = \'' + news.link + '\'')
+        exists = cursor.fetchall()
+        if len(exists) == 0:
+            try:
+                cursor.execute('insert into news_python (site, title, link, description, published)  values ('
+                               + site_id + ',\'' + news.title + '\', \'' + str(news.link) + '\', \'' + str(news.description) +
+                               '\', \'' + news.published[:-5] + '\')')
+                connection.commit()
+            except psycopg2.Error:
+                connection.rollback()
+
+
+def get_news(site_id, page):
+    global connection, cursor
+    cursor = connection.cursor()
+    cursor.execute('select * from news_python where site = ' + site_id)
+    results = cursor.fetchall()
+    news = []
+    for row in results:
+        entity = Entity.News(row[0], row[1], row[2], row[3], row[4], row[5])
+        news.append(entity)
+    isLastPage = (len(news) <= int(page)*10)
+    return [news[int(2)*10 - 10:int(2)*10], isLastPage]
+
 
 def parse_news(feed):
     interesting = feedparser.parse(feed)
-    entry1 = interesting.entries[1]
     parsed_news = []
     for entry in interesting.entries:
         new_news = Entity.News(1, 0, entry.title, entry.id, entry.summary, entry.published)
         parsed_news.append(new_news)
     return parsed_news
-
-
-
-# FIXME: проверить/дополнить структуру таблицы
-def update_news():
-    global connection, cursor
-    cursor = connection.cursor()
-    cursor.execute('select * from news_python')
-    results = cursor.fetchall()
-    database_news = []
-    for row in results:
-        entity = Entity.News(row[0], row[1], row[2], row[3], row[4], row[5])
-        cursor.execute('select url from sites where id = ' + str(row[1]))
-        results_site = cursor.fetchall()
-        entity.site = results_site[0][0]
-        database_news.append(entity)
-
-
-# FIXME: проверить/дополнить структуру таблицы и классов News
-# TODO: тут сайт как url, а надо сделать select и вытянуть id --- либо вообще сайт просто как url без доп таблицы? но как тогда хранить с разных мест --- или я задание не поняла (в смысле там с разных сайтов или куда-то переходить надо для разных)
-def insert_news(parsed_news):
-    global connection, cursor
-    cursor = connection.cursor()
-    for element in parsed_news:
-        cursor.execute('insert into news_python (site, title, link, description, published) values (%s, %s, %s, %s, %s)',
-                       element.site, element.title, element.link, element.description, element.published)
 
 
 def add_site(site_url):

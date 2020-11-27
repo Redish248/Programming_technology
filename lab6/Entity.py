@@ -1,6 +1,6 @@
 class News:
-    def __init__(self, id, site, title, link, description, published):
-        self.id = id
+    def __init__(self, id_news, site, title, link, description, published):
+        self.id_news = id_news
         self.site = site
         self.title = title
         self.link = link
