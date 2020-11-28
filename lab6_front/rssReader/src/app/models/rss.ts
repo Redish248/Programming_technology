@@ -1,5 +1,5 @@
 export class Rss {
-  id: number;
-  name: string;
-  url: string;
+    id_site: number;
+    name: string;
+    url: string;
 }

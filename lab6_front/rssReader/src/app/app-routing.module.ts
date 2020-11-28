@@ -5,13 +5,13 @@ import {NewsComponent} from './news/news.component';
 
 
 const routes: Routes = [
-  { path: 'rss', component: RssComponent },
-  { path: 'news', component: NewsComponent },
-  { path: '**', redirectTo: '/rss' }
+    { path: 'rss', component: RssComponent },
+    { path: 'news/:id', component: NewsComponent },
+    { path: '**', redirectTo: '/rss' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule { }

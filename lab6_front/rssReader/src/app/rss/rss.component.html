@@ -1,1 +1,14 @@
-<p>rss works!</p>
+<div class="sites-container">
+    <div class="sites-container_add">
+        <mat-form-field class="sites-container_add-input">
+            <input matInput placeholder="URL" [(ngModel)]="newSiteUrl">
+        </mat-form-field>
+        <button mat-raised-button color="primary" class="sites-container_add-button" (click)="addSite()">
+            Add site
+        </button>
+    </div>
+    <div *ngFor="let site of sites" class="sites-container_site" (click)="onSiteClick(site.id_site)">
+            <div class="sites-container_site-name">{{site.name}}</div>
+            <div class="sites-container_site-url">{{site.url}}</div>
+    </div>
+</div>

@@ -122,5 +122,10 @@
       }
     }
   },
-  "defaultProject": "rssReader"
+  "defaultProject": "rssReader",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "less"
+    }
+  }
 }
