@@ -5,6 +5,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import '../App.css';
 
 class GamePage extends Component {
 
@@ -16,6 +17,7 @@ class GamePage extends Component {
             correct_name: 'a',
             varA: 'b',
             varB: 'c',
+            varC: 'd',
             selectedAnswer: '',
             result: ''
         }
@@ -28,13 +30,16 @@ class GamePage extends Component {
             url: 'http://localhost:8080/game/next_question',
             withCredentials: true
         }).then((res) => {
-                this.setState({
-                    image: res.data.image,
-                    correct_name: res.data.correct_name,
-                    varA: res.data.varA,
-                    varB: res.data.varB,
-                });
-            }
+            let answers = [res.data.varA, res.data.varB, res.data.correct_name]
+            answers.sort();
+            this.setState({
+                image: res.data.image,
+                correct_name: res.data.correct_name,
+                varA: answers[0],
+                varB: answers[1],
+                varC: answers[2]
+            });
+        }
         ).catch(function (error) {
             console.log(error);
             if (error === undefined || error.response === undefined) {
@@ -53,37 +58,36 @@ class GamePage extends Component {
     checkAnswer = () => {
         if (this.state.correct_name === this.state.selectedAnswer) {
             this.setState({
-                result: 'Правильно!'
+                result: 'Correct!'
             });
         } else {
             this.setState({
-                result: 'Неправильно!'
+                result: 'Incorrect!'
             });
         }
 
     }
 
     goNext = () => {
-       // this.props.history.push('/game');
-        window.location.reload()
+        setTimeout(window.location.reload(), 1000)
     }
 
     render() {
         return (
-            <div>
-                <h3>Выберите ответ:</h3>
+            <div className="marginTop80">
+                <h2>Choose an answer:</h2>
                 <table >
                     <tr>
                         <td>
                             <Container>
                                 <Row>
-                                    <Col xs={400} md={200} >
-                                        <Image className="marginAll" src={this.state.image} alt="Картинка не загрузилась" thumbnail />
+                                    <Col >
+                                        <Image height={200} width={300} className="marginAll" src={this.state.image} alt="Картинка не загрузилась" thumbnail />
                                     </Col>
                                 </Row>
                             </Container>
                         </td>
-                        <td>
+                        <td className="paddingLeft70">
                             <div>
                                 <div className="radio">
                                     <label>
@@ -111,21 +115,21 @@ class GamePage extends Component {
                                     <label>
                                         <input
                                             type="radio"
-                                            value={this.state.correct_name}
-                                            checked={this.state.selectedAnswer === this.state.correct_name}
+                                            value={this.state.varC}
+                                            checked={this.state.selectedAnswer === this.state.varC}
                                             onChange={this.onValueChange}
                                         />
-                                        {this.state.correct_name}
+                                        {this.state.varC}
                                     </label>
                                 </div>
                                 <Button className="marginAll" variant="secondary" size="lg" active onClick={this.checkAnswer} >
-                                    Ответить
+                                    Answer
                                 </Button>
                             </div>
                             <div className="marginAll" className="Error">{this.state.result}</div>
                             <div className="mb-2">
                                 <Button className="marginAll" variant="secondary" size="lg" onClick={this.goNext}>
-                                    Дальше
+                                    Next
                                 </Button>
                             </div>
                         </td>

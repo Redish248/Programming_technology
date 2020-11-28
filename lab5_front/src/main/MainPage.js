@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import * as axios from "axios";
 import Button from 'react-bootstrap/Button'
+import '../App.css';
 
 class MainPage extends Component {
 
@@ -22,8 +23,7 @@ class MainPage extends Component {
             data: formData,
             withCredentials: true
         }).then((res) => {
-            that.props.history.push('/game');
-            window.location.reload()
+            window.location.replace('/game')
         }).catch(function (error) {
             console.log(error);
             if (error === undefined || error.response === undefined) {
@@ -41,8 +41,8 @@ class MainPage extends Component {
 
     render() {
         return (
-            <div>
-                <h1>Игра "Угадай по фото!"</h1>
+            <div className="marginTop80">
+                <h1>Game "Guess by the photo!"</h1>
                 <form onSubmit={this.setUpLevel}>
                     <div className="radio">
                         <label>
@@ -52,7 +52,7 @@ class MainPage extends Component {
                                 checked={this.state.level === "1"}
                                 onChange={this.onValueChange}
                             />
-                            1 уровень - Лёгкий
+                            Level 1 - Light
                         </label>
                     </div>
                     <div className="radio">
@@ -63,7 +63,7 @@ class MainPage extends Component {
                                 checked={this.state.level === "2"}
                                 onChange={this.onValueChange}
                             />
-                            2 уровень - Средний
+                            Level 2 - Medium
                         </label>
                     </div>
                     <div className="radio">
@@ -74,11 +74,11 @@ class MainPage extends Component {
                                 checked={this.state.level === "3"}
                                 onChange={this.onValueChange}
                             />
-                            3 уровень - Сложный
+                            Level 3 - Hard
                         </label>
                     </div>
                     <Button variant="secondary" size="lg" active type="submit">
-                        Выбрать
+                        Choose
                     </Button>
                 </form>
             </div>

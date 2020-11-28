@@ -23,3 +23,14 @@
 .marginAll {
   margin: 15px;
 }
+
+.marginTop80 {
+  margin-top: 80px;
+  border: 2px solid;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.paddingLeft70 {
+  padding-left: 70px;
+}
