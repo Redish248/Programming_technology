@@ -14,7 +14,7 @@
         </div>
         <div *ngFor="let news of newsList.news" class="news-container_news-item">
             <div class="news-container_news-item-title">
-                <div>{{news.title}}</div>
+                <div><a target="_blank" rel="noopener noreferrer" [href]="news.link">{{news.title}}</a></div>
                 <div>{{news.published | date}}</div>
             </div>
             <div class="news-container_news-item-description">

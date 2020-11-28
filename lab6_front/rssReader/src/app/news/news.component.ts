@@ -21,9 +21,9 @@ export class NewsComponent implements OnInit {
             params => {
                 this.siteId = Number(params.get('id'));
                 this.page = 1;
-                this.newsList = {isLastPage: false, news: [{id_news: 1, link: 'kek link', site: 'kek',
+                this.newsList = {isLastPage: false, news: [{id_news: 1, link: 'https://habr.com/ru/rss/interesting', site: 'kek',
                         description: 'kek <i>description</i>', published: new Date(), title: 'kek title'},
-                        {id_news: 1, link: 'kek link', site: 'kek',
+                        {id_news: 1, link: 'https://habr.com/ru/rss/interesting', site: 'kek',
                             description: 'kek <i>description</i>', published: new Date(), title: 'kek title'}]};
                 /*this.rssService.getNews(this.siteId, this.page).subscribe(news => {
                     this.newsList = news;
