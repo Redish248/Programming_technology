@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {RssService} from "../services/rss-service";
+import {NewsList} from "../models/news";
 
 @Component({
     selector: 'app-news',
@@ -8,16 +10,39 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class NewsComponent implements OnInit {
     siteId: number;
+    page: number;
+    newsList: NewsList;
 
-    constructor(private route: ActivatedRoute) { }
+    constructor(private route: ActivatedRoute,
+                private rssService: RssService) { }
 
     ngOnInit(): void {
         this.route.paramMap.subscribe(
             params => {
                 this.siteId = Number(params.get('id'));
-                // request
+                this.page = 1;
+                this.newsList = {isLastPage: false, news: [{id_news: 1, link: 'kek link', site: 'kek',
+                        description: 'kek description', published: new Date(), title: 'kek title'}]};
+                /*this.rssService.getNews(this.siteId, this.page).subscribe(news => {
+                    this.newsList = news;
+                });*/
             }
         );
+    }
+
+    changePage(isNext: boolean): void {
+        const newPage: number = this.page + (isNext ? 1 : -1);
+        /*this.rssService.getNews(this.siteId, newPage).subscribe(news => {
+                    this.newsList = news;
+                    this.page = newPage;
+                });*/
+    }
+
+    updateSite(): void {
+        this.rssService.updateNews(this.siteId).subscribe(news => {
+            this.newsList = news;
+            this.page = 1;
+        });
     }
 
 }

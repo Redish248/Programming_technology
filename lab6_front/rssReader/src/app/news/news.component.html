@@ -3,3 +3,30 @@
         <mat-icon>arrow_back</mat-icon>
     </button>
 </div>
+<div class="news-container">
+    <div class="news-container_news">
+        <div class="news-container_news-title">
+            <h3>{{newsList?.news[0]?.site}}</h3>
+            <button mat-icon-button color="none" (click)="updateSite()">
+                <mat-icon>loop</mat-icon>
+            </button>
+
+        </div>
+        <!--<div *ngFor="let news of newsList.news" class="news-container_news-item">
+            <div></div>
+        </div>-->
+    </div>
+    <div class="news-container_pages">
+        <div class="news-container_pages-arrow">
+            <button mat-icon-button color="none" [disabled]="page === 1" (click)="changePage(false)">
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+        </div>
+        <div>Page {{page}}</div>
+        <div class="news-container_pages-arrow">
+            <button mat-icon-button color="none" [disabled]="newsList.isLastPage" (click)="changePage(true)">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>
