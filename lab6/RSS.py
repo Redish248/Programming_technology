@@ -15,7 +15,7 @@ serverPort = 8080
 class MyHandler(BaseHTTPRequestHandler):
     def _set_headers(self):
         self.send_header('Content-type', 'application/json')
-        self.send_header("Access-Control-Allow-Origin", "http://localhost:3000")
+        self.send_header("Access-Control-Allow-Origin", "http://localhost:4200")
         self.send_header("Access-Control-Allow-Credentials", "true")
         self.end_headers()
 
@@ -79,7 +79,7 @@ def insert_new_news(parsed_news, site_id):
     global connection, cursor
     cursor = connection.cursor()
     for news in parsed_news:
-        cursor.execute('select * from news_python where id = \'' + site_id + '\' and link = \'' + news.link + '\'')
+        cursor.execute('select * from news_python where site =' + site_id + ' and link =\'' + news.link + '\'')
         exists = cursor.fetchall()
         if len(exists) == 0:
             try:
@@ -103,7 +103,7 @@ def get_news(site_id, page):
         entity = Entity.News(row[0], site_name, row[2], row[3], row[4], row[5])
         news.append(entity)
     isLastPage = (len(news) <= int(page)*10)
-    return [news[int(2)*10 - 10:int(2)*10], isLastPage]
+    return [news[int(page)*10 - 10:int(page)*10], isLastPage]
 
 
 def parse_news(feed):

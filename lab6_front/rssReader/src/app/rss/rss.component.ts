@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {RssService} from '../services/rss-service';
 import {Rss} from '../models/rss';
 import {Router} from '@angular/router';
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-rss',
@@ -19,11 +19,13 @@ export class RssComponent implements OnInit {
                 private snackBar: MatSnackBar) { }
 
     ngOnInit(): void {
-        /*this.rssService.getAllSites().subscribe(sites => {
+        this.rssService.getAllSites().subscribe(sites => {
             this.sites = sites;
-        });*/
-        this.sites = [{id_site: 0, name: 'habr.com', url: 'https://habr.com/ru/rss/interesting'},
-            {id_site: 1, name: 'news.yandex.ru', url: 'https://news.yandex.ru/volleyball.rss'}];
+        },
+        error => this.snackBar.open('Error during parsing site news', 'Close', {
+          duration: 5000,
+          })
+        );
     }
 
     onSiteClick(id: number): void {
@@ -32,16 +34,25 @@ export class RssComponent implements OnInit {
 
     addSite(): void {
         if (this.newSiteUrl) {
-                const formData = new FormData();
-                formData.append('url', this.newSiteUrl);
-                this.rssService.addSite(formData).subscribe(newSite => {
-                    this.sites.unshift(newSite);
-                },
-                    // todo: check error code
-                    error => this.snackBar.open('This URL already added', 'Close', {
+            const formData = new FormData();
+            formData.append('url', this.newSiteUrl);
+            this.rssService.addSite(formData).subscribe(newSite => {
+                this.sites.unshift(newSite);
+                this.newSiteUrl = '';
+            },
+                error => {
+                    if (error.status === 409) {
+                      this.snackBar.open('This URL already added', 'Close', {
                         duration: 5000,
-                    }));
-            }
+                      });
+                    } else {
+                      this.snackBar.open('Error during parsing site news', 'Close', {
+                        duration: 5000,
+                      });
+                    }
+                }
+            );
+        }
     }
 
 }
