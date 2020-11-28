@@ -12,6 +12,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
     declarations: [
@@ -28,7 +29,8 @@ import {MatInputModule} from '@angular/material/input';
         MatIconModule,
         HttpClientModule,
         MatInputModule,
-        FormsModule
+        FormsModule,
+        MatSnackBarModule
     ],
     providers: [],
     bootstrap: [AppComponent]

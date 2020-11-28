@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {RssService} from '../services/rss-service';
 import {Rss} from '../models/rss';
 import {Router} from '@angular/router';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
     selector: 'app-rss',
@@ -14,7 +15,8 @@ export class RssComponent implements OnInit {
     newSiteUrl: string;
 
     constructor(private rssService: RssService,
-                private router: Router,) { }
+                private router: Router,
+                private snackBar: MatSnackBar) { }
 
     ngOnInit(): void {
         /*this.rssService.getAllSites().subscribe(sites => {
@@ -34,7 +36,11 @@ export class RssComponent implements OnInit {
                 formData.append('url', this.newSiteUrl);
                 this.rssService.addSite(formData).subscribe(newSite => {
                     this.sites.unshift(newSite);
-                });
+                },
+                    // todo: check error code
+                    error => this.snackBar.open('This URL already added', 'Close', {
+                        duration: 5000,
+                    }));
             }
     }
 
