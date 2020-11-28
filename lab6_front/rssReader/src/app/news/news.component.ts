@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {RssService} from "../services/rss-service";
-import {NewsList} from "../models/news";
+import {RssService} from '../services/rss-service';
+import {NewsList} from '../models/news';
 
 @Component({
     selector: 'app-news',
@@ -22,7 +22,9 @@ export class NewsComponent implements OnInit {
                 this.siteId = Number(params.get('id'));
                 this.page = 1;
                 this.newsList = {isLastPage: false, news: [{id_news: 1, link: 'kek link', site: 'kek',
-                        description: 'kek description', published: new Date(), title: 'kek title'}]};
+                        description: 'kek <i>description</i>', published: new Date(), title: 'kek title'},
+                        {id_news: 1, link: 'kek link', site: 'kek',
+                            description: 'kek <i>description</i>', published: new Date(), title: 'kek title'}]};
                 /*this.rssService.getNews(this.siteId, this.page).subscribe(news => {
                     this.newsList = news;
                 });*/

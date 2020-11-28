@@ -12,9 +12,15 @@
             </button>
 
         </div>
-        <!--<div *ngFor="let news of newsList.news" class="news-container_news-item">
-            <div></div>
-        </div>-->
+        <div *ngFor="let news of newsList.news" class="news-container_news-item">
+            <div class="news-container_news-item-title">
+                <div>{{news.title}}</div>
+                <div>{{news.published | date}}</div>
+            </div>
+            <div class="news-container_news-item-description">
+                <div [innerHTML]="news.description"></div>
+            </div>
+        </div>
     </div>
     <div class="news-container_pages">
         <div class="news-container_pages-arrow">
